@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    AddHandler application/x-httpd-php82 .php
+   
+</IfModule>
