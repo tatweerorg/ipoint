@@ -78,11 +78,8 @@ class ProductCart extends Component
             return $cartItem->id == $product['id'];
         });
 
-        if ($exists->isNotEmpty()) {
-            session()->flash('message', 'Product exists in the cart!');
-
-            return;
-        }
+      
+       if (!$exists->isNotEmpty()) {
 
         $this->product = $product;
 
@@ -108,6 +105,19 @@ class ProductCart extends Component
         $this->quantity[$product['id']] = 1;
         $this->discount_type[$product['id']] = 'fixed';
         $this->item_discount[$product['id']] = 0;
+    }else{
+  $rowId = $exists->first()->rowId; // Get the rowId of the existing cart item
+        $cartItem = $cart->get($rowId);
+
+        // Increment the quantity by 1
+        $cart->update($rowId, ['qty' => $cartItem->qty + 1]);
+
+        // Update quantities and discounts in your local arrays
+        $this->quantity[$product['id']] += 1;
+        $this->item_discount[$product['id']] = 0; // Update if applicable
+
+        session()->flash('message', 'Product quantity updated in the cart!');
+    }
     }
 
     public function removeItem($row_id) {

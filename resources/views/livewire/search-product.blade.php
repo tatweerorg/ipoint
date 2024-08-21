@@ -8,7 +8,7 @@
                             <i class="bi bi-search text-primary"></i>
                         </div>
                     </div>
-                    <input wire:keydown.enter.prevent="selectFirstProduct()" wire:keydown.escape="resetQuery" wire:model.live.debounce.500ms="query" type="text" class="form-control" placeholder="Type product name or code....">
+                    <input wire:keydown.enter.prevent="selectFirstProduct()" wire:keydown.escape="resetQuery" wire:model.live.debounce.500ms="query" type="text" class="form-control" placeholder="ادخل الباركود او اسم المنتج ....">
                 </div>
             </div>
         </div>
@@ -31,8 +31,8 @@
         <div class="card-body shadow">
             <ul class="list-group list-group-flush">
                 @foreach($search_results as $result)
-                <li class="list-group-item list-group-item-action">
-                    <a wire:click="resetQuery" wire:click.prevent="selectProduct({{ $result }})" href="#">
+                <li class="list-group-item list-group-item-action" wire:click="resetQuery" wire:click.prevent="selectProduct({{ $result }})">
+                    <a  href="#">
                         {{ $result->product_name }} | {{ $result->product_code }}
                     </a>
                 </li>

@@ -6,6 +6,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Category;
@@ -20,7 +21,10 @@ class PosController extends Controller
 
     public function index() {
         Cart::instance('sale')->destroy();
-
+ if (!Cache::has('products_cache')) {
+        $products = Product::all();
+        Cache::put('products_cache', $products, 30 * 24 * 60 * 60);
+    }
         $customers = Customer::all();
         $product_categories = Category::all();
 

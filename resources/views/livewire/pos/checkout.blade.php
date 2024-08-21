@@ -13,22 +13,7 @@
                 </div>
                 @endif
 
-                <div class="form-group">
-                    <label for="customer_id">{{__('public.Customer')}} <span class="text-danger">*</span></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <a href="{{ route('customers.create') }}" class="btn btn-primary">
-                                <i class="bi bi-person-plus"></i>
-                            </a>
-                        </div>
-                        <select wire:model.live="customer_id" id="customer_id" class="form-control">
-                            <option value="" selected>{{__('public.SelectCustomer')}}</option>
-                            @foreach($customers as $customer)
-                            <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+              
 
                 <div class="table-responsive">
                     <table class="table">
@@ -85,19 +70,12 @@
                 <div class="col-md-12">
                     <div class="table-responsive">
                         <table class="table table-striped">
-                            <tr>
-                                <th>{{__('public.Tax')}} ({{ $global_tax }}%)</th>
-                                <td>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</td>
-                            </tr>
+                          
                             <tr>
                                 <th>{{__('public.Discount')}} ({{ $global_discount }}%)</th>
                                 <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
                             </tr>
-                            <tr>
-                                <th>{{__('public.Shipping')}}</th>
-                                <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
-                                <td>(+) {{ format_currency($shipping) }}</td>
-                            </tr>
+                           
                             <tr class="text-primary">
                                 <th>{{__('public.GrandTotal')}}</th>
                                 @php
@@ -113,25 +91,32 @@
             </div>
 
             <div class="form-row">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="tax_percentage">{{__('public.Tax')}} (%)</label>
-                        <input wire:model.blur="global_tax" type="number" class="form-control" min="0" max="100" value="{{ $global_tax }}" required>
-                    </div>
-                </div>
-                <div class="col-lg-4">
+              
+                <div class="col">
                     <div class="form-group">
                         <label for="discount_percentage">{{__('public.Discount')}} (%)</label>
                         <input wire:model.blur="global_discount" type="number" class="form-control" min="0" max="100" value="{{ $global_discount }}" required>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="shipping_amount">{{__('public.Shipping')}}</label>
-                        <input wire:model.blur="shipping" type="number" class="form-control" min="0" value="0" required step="0.01">
+                  <div class="form-group col">
+                    <label for="customer_id">{{__('public.Customer')}} </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <a href="{{ route('customers.create') }}" class="btn btn-primary">
+                                <i class="bi bi-person-plus"></i>
+                            </a>
+                        </div>
+                        <select wire:model.live="customer_id" id="customer_id" class="form-control">
+                            <option value="" selected>{{__('public.SelectCustomer')}}</option>
+                            @foreach($customers as $customer)
+                            <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
+            
             </div>
+            
 
             <div class="form-group d-flex justify-content-center flex-wrap mb-0">
                 <button wire:click="resetCart" type="button" class="btn btn-pill btn-danger mr-3"><i class="bi bi-x"></i>{{__('public.Reset')}} </button>

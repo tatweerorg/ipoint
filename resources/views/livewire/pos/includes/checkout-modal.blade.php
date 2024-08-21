@@ -76,11 +76,7 @@
                                         <th>{{__('public.Discount')}} ({{ $global_discount }}%)</th>
                                         <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
                                     </tr>
-                                    <tr>
-                                        <th>{{__('public.Shipping')}}</th>
-                                        <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
-                                        <td>(+) {{ format_currency($shipping) }}</td>
-                                    </tr>
+                                  
                                     <tr class="text-primary">
                                         <th>{{__('public.GrandTotal')}}</th>
                                         @php

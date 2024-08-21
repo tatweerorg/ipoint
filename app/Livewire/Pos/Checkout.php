@@ -69,13 +69,8 @@ class Checkout extends Component
             return $cartItem->id == $product['id'];
         });
 
-        if ($exists->isNotEmpty()) {
-            session()->flash('message', 'Product exists in the cart!');
-
-            return;
-        }
-
-        $cart->add([
+        if (!$exists->isNotEmpty()) {
+            $cart->add([
             'id'      => $product['id'],
             'name'    => $product['product_name'],
             'qty'     => 1,
@@ -98,6 +93,21 @@ class Checkout extends Component
         $this->discount_type[$product['id']] = 'fixed';
         $this->item_discount[$product['id']] = 0;
         $this->total_amount = $this->calculateTotal();
+        }else{
+             $rowId = $exists->first()->rowId; // Get the rowId of the existing cart item
+        $cartItem = $cart->get($rowId);
+
+        // Increment the quantity by 1
+        $cart->update($rowId, ['qty' => $cartItem->qty + 1]);
+
+        // Update quantities and discounts in your local arrays
+        $this->quantity[$product['id']] += 1;
+        $this->item_discount[$product['id']] = 0; // Update if applicable
+        $this->total_amount = $this->calculateTotal();
+
+        }
+
+       
     }
 
     public function removeItem($row_id) {

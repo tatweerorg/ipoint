@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Modules\Product\Entities\Product;
 
@@ -32,9 +33,13 @@ class SearchProduct extends Component
     }
 
     public function updatedQuery() {
-        $this->search_results = Product::where('product_name', 'like', '%' . $this->query . '%')
-            ->orWhere('product_code', 'like', '%' . $this->query . '%')
-            ->take($this->how_many)->get();
+      $products = Cache::get('products_cache', collect());
+
+        // Filter cached products based on the search query
+        $this->search_results = $products->filter(function ($product) {
+            return stripos($product->product_name, $this->query) !== false ||
+                   stripos($product->product_code, $this->query) !== false;
+        })->take($this->how_many)->values();
     }
 
     public function loadMore() {
