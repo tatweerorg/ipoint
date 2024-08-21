@@ -16,6 +16,9 @@ Route::group(['middleware' => 'auth'], function () {
     //POS
     Route::get('/app/pos', 'PosController@index')->name('app.pos.index');
     Route::post('/app/pos', 'PosController@store')->name('app.pos.store');
+    Route::post('/app/suspend', 'PosController@suspend')->name('app.pos.suspend');
+    Route::get('/app/pos/suspended', 'PosController@getSuspendedSales')->name('app.pos.suspended');
+
 
     //Generate PDF
     Route::get('/sales/pdf/{id}', function ($id) {

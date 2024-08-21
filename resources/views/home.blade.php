@@ -11,9 +11,7 @@
 @section('content')
 <div class="container-fluid">
     @can('show_total_stats')
-     <div class="alert alert-success text-center" role="alert">
-            التحديث الاخير , اضافة النسخة العربية لنظام اي بوينت 
-            </div>
+    
     <div class="row">
         <div class="col-md-6 col-lg-3">
             <div class="card border-0">
@@ -23,7 +21,7 @@
                     </div>
                     <div>
                         <div class="text-value text-primary">{{ format_currency($revenue) }}</div>
-                        <div class="text-muted text-uppercase font-weight-bold small">{{__('public.Revenue')}}</div>
+                        <div class="text-muted text-uppercase font-weight-bold ">{{__('public.Revenue')}}</div>
                     </div>
                 </div>
             </div>
@@ -37,7 +35,7 @@
                     </div>
                     <div>
                         <div class="text-value text-warning">{{ format_currency($sale_returns) }}</div>
-                        <div class="text-muted text-uppercase font-weight-bold small">{{__('public.SalesReturn')}}</div>
+                        <div class="text-muted text-uppercase font-weight-bold ">{{__('public.SalesReturn')}}</div>
                     </div>
                 </div>
             </div>
@@ -51,7 +49,7 @@
                     </div>
                     <div>
                         <div class="text-value text-success">{{ format_currency($purchase_returns) }}</div>
-                        <div class="text-muted text-uppercase font-weight-bold small">{{__('public.PurchasesReturn')}}</div>
+                        <div class="text-muted text-uppercase font-weight-bold ">{{__('public.PurchasesReturn')}}</div>
                     </div>
                 </div>
             </div>
@@ -65,7 +63,7 @@
                     </div>
                     <div>
                         <div class="text-value text-info">{{ format_currency($profit) }}</div>
-                        <div class="text-muted text-uppercase font-weight-bold small">{{__('public.Profit')}}</div>
+                        <div class="text-muted text-uppercase font-weight-bold ">{{__('public.Profit')}}</div>
                     </div>
                 </div>
             </div>

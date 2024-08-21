@@ -50,6 +50,7 @@ class Checkout extends Component
     }
 
     public function proceed() {
+        
             $this->dispatch('showCheckoutModal');
           
     }

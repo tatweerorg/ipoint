@@ -68,10 +68,7 @@
                                             </span>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <th>{{__('public.Tax')}} ({{ $global_tax }}%)</th>
-                                        <td>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</td>
-                                    </tr>
+                                   
                                     <tr>
                                         <th>{{__('public.Discount')}} ({{ $global_discount }}%)</th>
                                         <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
@@ -93,8 +90,10 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('public.Close')}}</button>
-                    <button type="submit" class="btn btn-primary">{{__('public.Submit')}}</button>
+                    <button type="button" class="btn btn-lg  btn-secondary" data-dismiss="modal">{{__('public.Close')}}</button>
+                    <button class="btn btn-lg  btn-primary">تأكيد وطباعة</button>
+                    <button type="submit" class="btn btn-lg  btn-success">{{__('public.Submit')}}</button>
+
                 </div>
             </form>
         </div>

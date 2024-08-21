@@ -1,4 +1,10 @@
 <div>
+    <style>
+    .large-text {
+        font-size: 1.5rem; /* Adjust as needed */
+    }
+</style>
+
     <div class="card border-0 shadow-sm">
         <div class="card-body">
             <div>
@@ -76,12 +82,12 @@
                                 <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
                             </tr>
                            
-                            <tr class="text-primary">
+                            <tr class="text-white bg-success large-text ">
                                 <th>{{__('public.GrandTotal')}}</th>
                                 @php
                                 $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping
                                 @endphp
-                                <th>
+                                <th >
                                     (=) {{ format_currency($total_with_shipping) }}
                                 </th>
                             </tr>
@@ -118,9 +124,16 @@
             </div>
             
 
-            <div class="form-group d-flex justify-content-center flex-wrap mb-0">
-                <button wire:click="resetCart" type="button" class="btn btn-pill btn-danger mr-3"><i class="bi bi-x"></i>{{__('public.Reset')}} </button>
-                <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="btn btn-pill btn-primary" {{  $total_amount == 0 ? 'disabled' : '' }}><i class="bi bi-check"></i> {{__('public.Proceed')}}</button>
+            <div class="form-group d-flex justify-content-center flex-wrap mt-4 mb-0">
+                <button wire:click="resetCart" type="button" class="btn btn-lg  btn-danger mr-3"><i class="bi bi-x"></i>{{__('public.Reset')}} </button>
+<form action="{{ route('app.pos.suspend') }}" method="POST">
+    @csrf
+    <input type="hidden" name="suspend" value="1">
+    <button type="submit" class="btn btn-lg mr-3 btn-primary" {{ $total_amount == 0 ? 'disabled' : '' }}>
+        <i class="bi bi-x"></i> تعليق الفاتورة
+    </button>
+</form>                <button wire:loading.attr="disabled" wire:click="proceed" type="button" class="btn btn-lg  btn-success" {{  $total_amount == 0 ? 'disabled' : '' }}><i class="bi bi-check"></i> {{__('public.Proceed')}}</button>
+
             </div>
         </div>
     </div>

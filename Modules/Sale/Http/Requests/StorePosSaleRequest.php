@@ -16,11 +16,11 @@ class StorePosSaleRequest extends FormRequest
     {
         return [
             'customer_id' => 'nullable',
-            'tax_percentage' => 'required|integer|min:0|max:100',
-            'discount_percentage' => 'required|integer|min:0|max:100',
-            'shipping_amount' => 'required|numeric',
-            'total_amount' => 'required|numeric',
-            'paid_amount' => 'required|numeric',
+            'tax_percentage' => 'integer|min:0|max:100',
+            'discount_percentage' => 'integer|min:0|max:100',
+            'shipping_amount' => 'numeric',
+            'total_amount' => 'numeric',
+            'paid_amount' => 'numeric',
             'note' => 'nullable|string|max:1000'
         ];
     }
