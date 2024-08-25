@@ -91,11 +91,18 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-lg  btn-secondary" data-dismiss="modal">{{__('public.Close')}}</button>
-                    <button class="btn btn-lg  btn-primary">تأكيد وطباعة</button>
-                    <button type="submit" class="btn btn-lg  btn-success">{{__('public.Submit')}}</button>
+                
+   <button type="submit" class="btn btn-lg  btn-success">{{__('public.Submit')}}</button>
 
                 </div>
             </form>
+             <div class="modal-footer ">
+            <form action="{{ route('app.pos.print') }}" method="POST" class="d-inline row ">
+    @csrf
+    <button type="submit" class="btn btn-lg btn-primary col-12">تأكيد وطباعة</button>
+
+</form> 
+             </div>
         </div>
     </div>
 </div>

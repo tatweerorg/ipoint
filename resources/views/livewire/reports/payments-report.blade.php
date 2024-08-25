@@ -88,6 +88,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                              @php
+                                        $total =0;
+                                        @endphp
                             @forelse($information as $data)
                             <tr>
                                 <td>{{ \Carbon\Carbon::parse($data->date)->format('d M, Y') }}</td>
@@ -104,6 +107,11 @@
                                     @endif
                                 </td>
                                 <td>{{ format_currency($data->amount) }}</td>
+                                  @php
+                                       
+                                $total += $data->amount;
+
+                                        @endphp
                                 <td>{{ $data->payment_method }}</td>
                             </tr>
                             @empty
@@ -115,6 +123,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                     <tr >
+    <td colspan="4 " ><strong>Total:</strong></td>
+    <td colspan="4">{{ format_currency($total) }}</td>
+</tr>
                     <div @class(['mt-3'=> $information->hasPages()])>
                         {{ $information->links() }}
                     </div>

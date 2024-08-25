@@ -2,13 +2,16 @@
     <div class="card mb-0 border-0 shadow-sm">
         <div class="card-body">
             <div class="form-group mb-0">
+                
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <i class="bi bi-search text-primary"></i>
                         </div>
                     </div>
-                    <input wire:keydown.enter.prevent="selectFirstProduct()" wire:keydown.escape="resetQuery" wire:model.live.debounce.500ms="query" type="text" class="form-control" placeholder="ادخل الباركود او اسم المنتج ....">
+
+                    <input   wire:keydown.enter.prevent="selectFirstProduct()" wire:keydown.escape="resetQuery" wire:model="query"     
+ type="text" class="form-control" placeholder="ادخل الباركود او اسم المنتج ....">
                 </div>
             </div>
         </div>
@@ -58,3 +61,23 @@
     @endif
     @endif
 </div>
+
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // جعل الإدخال في وضع التركيز عند فتح الصفحة
+        const inputElement = document.querySelector('[wire\\:model="query"]');
+        if (inputElement) {
+            inputElement.focus();
+        }
+    });
+    document.addEventListener('keydown', function(event) {
+        // التحقق مما إذا تم الضغط على مفتاح Ctrl
+        if (event.ctrlKey) {
+            // تحديد عنصر الإدخال
+            const inputElement = document.querySelector('[wire\\:model="query"]');
+            if (inputElement) {
+                inputElement.focus(); // جعل الإدخال في وضع التركيز
+            }
+        }
+    });
+</script>
