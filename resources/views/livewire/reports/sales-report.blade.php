@@ -1,4 +1,34 @@
+ <style>
+        @media print {
+            /* Hide all content except the invoice section */
+            body * {
+                visibility: hidden;
+            }
+            
+            .invoice, .invoice * {
+                visibility: visible;
+            }
+            
+            .invoice {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+                padding: 0;
+                margin: 0;
+            }
+            
+            /* Adjust the layout for printing if needed */
+            .invoice {
+                page-break-after: always;
+            }
+        }
+    </style>
+
 <div>
+ 
     <div class="row">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
@@ -72,7 +102,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row invoice">
         <div class="col-12">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
@@ -95,6 +125,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                              @php
+                                        $total =0;
+                                        @endphp
                             @forelse($sales as $sale)
                             <tr>
                                 <td>{{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</td>
@@ -116,6 +149,11 @@
                                     @endif
                                 </td>
                                 <td>{{ format_currency($sale->total_amount) }}</td>
+                                   @php
+                                       
+                                $total += $sale->total_amount;
+
+                                        @endphp
                                 <td>{{ format_currency($sale->paid_amount) }}</td>
                                 <td>{{ format_currency($sale->due_amount) }}</td>
                                 <td>
@@ -141,13 +179,25 @@
                                     <span class="text-danger">No Sales Data Available!</span>
                                 </td>
                             </tr>
+                                     
                             @endforelse
                         </tbody>
                     </table>
-                    <div @class(['mt-3'=> $sales->hasPages()])>
-                        {{ $sales->links() }}
+                
+      <div class="row">
+                         <tr class="col-6">
+                        <td colspan="8 " ><strong>Total:</strong></td>
+                         <td colspan="8">{{ format_currency($total) }}</td>
+                            </tr>
+                   
+                         <div class="d-print-none col-6">
+                            <div class="float-end">
+                                <a href="javascript:window.print()" class="btn btn-success waves-effect waves-light">طباعة</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                  
             </div>
         </div>
     </div>

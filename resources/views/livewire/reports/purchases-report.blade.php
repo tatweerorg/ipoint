@@ -95,6 +95,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                              @php
+                                        $total =0;
+                                        @endphp
                             @forelse($purchases as $purchase)
                             <tr>
                                 <td>{{ \Carbon\Carbon::parse($purchase->date)->format('d M, Y') }}</td>
@@ -116,6 +119,11 @@
                                     @endif
                                 </td>
                                 <td>{{ format_currency($purchase->total_amount) }}</td>
+                                  @php
+                                       
+                                $total += $sale->total_amount;
+
+                                        @endphp
                                 <td>{{ format_currency($purchase->paid_amount) }}</td>
                                 <td>{{ format_currency($purchase->due_amount) }}</td>
                                 <td>
@@ -144,6 +152,10 @@
                             @endforelse
                         </tbody>
                     </table>
+                     <tr >
+    <td colspan="4 " ><strong>Total:</strong></td>
+    <td colspan="4">{{ format_currency($total) }}</td>
+</tr>
                     <div @class(['mt-3'=> $purchases->hasPages()])>
                         {{ $purchases->links() }}
                     </div>
