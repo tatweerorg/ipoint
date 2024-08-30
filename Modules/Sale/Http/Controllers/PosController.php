@@ -21,14 +21,12 @@ class PosController extends Controller
 
     public function index() {
         Cart::instance('sale')->destroy();
-    $products = Cache::remember('products_cache', now()->addHours(4), function () {
-            return Product::all();
-        });
+   
 
         $customers = Customer::all();
         $product_categories = Category::all();
 
-        return view('sale::pos.index', compact('product_categories', 'customers','products'));
+        return view('sale::pos.index', compact('product_categories', 'customers'));
     }
 
 
