@@ -11,15 +11,7 @@
     <li class="breadcrumb-item"><a href="{{ route('home') }}">{{__('public.Home')}}</a></li>
     <li class="breadcrumb-item active">{{__('public.POS')}}</li>
 </ol>
-   <div class="form-group row breadcrumb">
-        <label for="suspended_invoice" class="col ">اختيار فاتورة معلقة</label>
-        <select id="suspended_invoice" name="suspended_invoice" class="form-control col">
-            <option  value="">اختر فاتورة</option>
-            @foreach($suspendedSales as $sale)
-                <option  value="{{ $sale->id }}">{{ $sale->reference }} - {{ $sale->total_amount }}</option>
-            @endforeach
-        </select>
-    </div>@endsection
+   @endsection
 
 @section('content')
 <div class="container-fluid">

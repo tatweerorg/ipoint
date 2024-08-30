@@ -58,6 +58,8 @@ return [
     'Categories' => "Categories ",
     'Categories' => "Categories ",
     'Categories' => "Categories ",
+    'DueAmount' => "Due Amount",
+    'SalesDetails'=>'Sales Details ',
 
 
 

@@ -2,12 +2,13 @@
 
 namespace Modules\People\Http\Controllers;
 
-use Modules\People\DataTables\SuppliersDataTable;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Cache;
 use Modules\People\Entities\Supplier;
+use Illuminate\Contracts\Support\Renderable;
+use Modules\People\DataTables\SuppliersDataTable;
 
 class SuppliersController extends Controller
 {
@@ -53,11 +54,19 @@ class SuppliersController extends Controller
     }
 
 
-    public function show(Supplier $supplier) {
-        abort_if(Gate::denies('show_suppliers'), 403);
+    public function show(Supplier $supplier)
+{
+    abort_if(Gate::denies('show_suppliers'), 403);
 
-        return view('people::suppliers.show', compact('supplier'));
-    }
+    $cacheKey = 'supplier_show_' . $supplier->id;
+
+    $cachedView = Cache::remember($cacheKey, 60, function () use ($supplier) {
+        return view('people::suppliers.show', compact('supplier'))->render();
+    });
+
+    return $cachedView;
+}
+
 
 
     public function edit(Supplier $supplier) {

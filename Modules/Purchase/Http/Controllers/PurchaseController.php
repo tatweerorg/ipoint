@@ -2,16 +2,17 @@
 
 namespace Modules\Purchase\Http\Controllers;
 
-use Modules\Purchase\DataTables\PurchaseDataTable;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Cache;
 use Modules\People\Entities\Supplier;
 use Modules\Product\Entities\Product;
 use Modules\Purchase\Entities\Purchase;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Modules\Purchase\Entities\PurchaseDetail;
 use Modules\Purchase\Entities\PurchasePayment;
+use Modules\Purchase\DataTables\PurchaseDataTable;
 use Modules\Purchase\Http\Requests\StorePurchaseRequest;
 use Modules\Purchase\Http\Requests\UpdatePurchaseRequest;
 
@@ -105,13 +106,24 @@ class PurchaseController extends Controller
     }
 
 
-    public function show(Purchase $purchase) {
-        abort_if(Gate::denies('show_purchases'), 403);
+    public function show(Purchase $purchase)
+{
+    abort_if(Gate::denies('show_purchases'), 403);
 
-        $supplier = Supplier::findOrFail($purchase->supplier_id);
+    $cacheKey = 'purchase.show.' . $purchase->id;
 
-        return view('purchase::show', compact('purchase', 'supplier'));
+    if (Cache::store('redis')->has($cacheKey)) {
+        return Cache::store('redis')->get($cacheKey);
     }
+
+    $supplier = Supplier::findOrFail($purchase->supplier_id);
+
+    $renderedView = view('purchase::show', compact('purchase', 'supplier'))->render();
+
+    Cache::store('redis')->put($cacheKey, $renderedView, now()->addMinutes(60));
+
+    return $renderedView;
+}
 
 
     public function edit(Purchase $purchase) {

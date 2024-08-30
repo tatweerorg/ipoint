@@ -2,12 +2,13 @@
 
 namespace Modules\People\Http\Controllers;
 
-use Modules\People\DataTables\CustomersDataTable;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Cache;
 use Modules\People\Entities\Customer;
+use Illuminate\Contracts\Support\Renderable;
+use Modules\People\DataTables\CustomersDataTable;
 
 class CustomersController extends Controller
 {
@@ -53,11 +54,21 @@ class CustomersController extends Controller
     }
 
 
-    public function show(Customer $customer) {
+    public function show(Customer $customer)
+    {
         abort_if(Gate::denies('show_customers'), 403);
-
-        return view('people::customers.show', compact('customer'));
+    
+        $cacheKey = 'customer_show_' . $customer->id;
+    
+        $cachedView = Cache::remember($cacheKey, 60, function () use ($customer) {
+            $sales = $customer->sales;
+            return view('people::customers.show', compact('customer', 'sales'))->render();
+        });
+    
+        return $cachedView;
     }
+    
+    
 
 
     public function edit(Customer $customer) {

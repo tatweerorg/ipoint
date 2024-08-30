@@ -26,11 +26,10 @@ class PosController extends Controller
         Cache::put('products_cache', $products, 30 * 24 * 60 * 60);
     }
 
-    $suspendedSales = Sale::where('suspend', true)->get();
         $customers = Customer::all();
         $product_categories = Category::all();
 
-        return view('sale::pos.index', compact('product_categories', 'customers','suspendedSales'));
+        return view('sale::pos.index', compact('product_categories', 'customers'));
     }
 
 

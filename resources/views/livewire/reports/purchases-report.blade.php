@@ -151,4 +151,12 @@
             </div>
         </div>
     </div>
+     <div class="row">
+        <div class="col-12 d-print-none d-flex justify-content-center align-items-center">
+            <div class=" w-25 text-white bg-primary p-1 mfe-3 rounded d-flex justify-content-center align-items-center" onclick="window.print()">
+    <i class="bi bi-printer font-2xl"></i> 
+</div>
+
+        </div>
+    </div>
 </div>
