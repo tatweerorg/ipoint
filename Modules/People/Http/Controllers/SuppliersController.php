@@ -61,7 +61,9 @@ class SuppliersController extends Controller
     $cacheKey = 'supplier_show_' . $supplier->id;
 
     $cachedView = Cache::remember($cacheKey, 60, function () use ($supplier) {
-        return view('people::suppliers.show', compact('supplier'))->render();
+            $purchases = $supplier->purchases;
+
+        return view('people::suppliers.show', compact('supplier','purchases'))->render();
     });
 
     return $cachedView;

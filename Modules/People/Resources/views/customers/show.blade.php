@@ -57,7 +57,9 @@
                                     <th>{{__('public.TotalAmount')}}</th>
                                     <th>{{__('public.ReceivedAmount')}}</th>
                                     <th>{{__('public.DueAmount')}}</th>
-                                    <th>{{__('public.Status')}}</th>
+                                    <th>{{__('public.PaymentStatus')}}</th>
+                                    <th>{{__('public.PaymentMethod')}}</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,16 +70,17 @@
                                     <td>{{ $sale->total_amount }}</td>
                                     <td>{{ $sale->paid_amount }}</td>
                                     <td>{{ $sale->due_amount }}</td>
-                                    <td>{{ $sale->status }}</td>
+                                      <td>{{ $sale->payment_status }}</td>
+                                    <td>{{ $sale->payment_method }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="d-flex justify-content-center align-items-center w-100">
+                                <div class="col-12 d-print-none d-flex justify-content-center align-items-center">
 
-                        <button onclick="printPage()" class="btn btn-primary mb-3">
-                                                    <i class="bi bi-printer"></i>  {{__('public.Print')}}
-</button>
+                      <div class=" w-25 text-white bg-primary p-1 mfe-3 rounded d-flex justify-content-center align-items-center" onclick="window.print()">
+    <i class="bi bi-printer font-2xl"></i> 
+</div>
 </div>
 
                     </div>
