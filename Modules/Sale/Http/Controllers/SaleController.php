@@ -1,7 +1,7 @@
 <?php
 
 namespace Modules\Sale\Http\Controllers;
-
+use Illuminate\Support\Carbon;
 use Modules\Sale\Entities\Sale;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +25,16 @@ class SaleController extends Controller
         return $dataTable->render('sale::index');
     }
 
+    public function salesDaily(SalesDataTable $dataTable)
+    {
+        abort_if(Gate::denies('access_sales'), 403);
 
+        // جلب مبيعات اليوم
+        $todaySales = Sale::whereDate('date', Carbon::today())->get();
+
+        // عرض المبيعات في صفحة Blade
+        return view('sale::salesDaily', compact('todaySales'));
+    }
     public function create() {
         abort_if(Gate::denies('create_sales'), 403);
 

@@ -1,5 +1,7 @@
 <?php
 
+use Modules\Sale\Http\Controllers\SaleController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,6 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Sales
     Route::resource('sales', 'SaleController');
+    Route::get('/sale/salesDaily', 'SaleController@salesDaily')->name('sale.salesDaily');
 
     //Payments
     Route::get('/sale-payments/{sale_id}', 'SalePaymentsController@index')->name('sale-payments.index');

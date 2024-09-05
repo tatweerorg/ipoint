@@ -33,6 +33,7 @@ return [
     'CreateSaleReturn' => "انشاء فاتورة مرتجعات ",
     'AllSaleReturns' => "جميع مرتجعات المبيعات ",
     'Categories' => "فئات ",
+    'salesDaily'=>'مبيعات اليوم',
     'CreateExpense' => "انشاء مصروف ",
     'AllExpenses' => "جميع المصروفات ",
     'Parties' => "الجهات  ",
