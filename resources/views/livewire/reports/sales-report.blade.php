@@ -190,11 +190,6 @@
                          <td colspan="8">{{ format_currency($total) }}</td>
                             </tr>
                    
-                         <div class="d-print-none col-6">
-                            <div class="float-end">
-                                <a href="javascript:window.print()" class="btn btn-success waves-effect waves-light">طباعة</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
                   
