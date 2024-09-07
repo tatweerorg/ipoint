@@ -110,6 +110,11 @@
                 <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i>{{__('public.AllSales')}}
             </a>
         </li>
+         <li class="c-sidebar-nav-item">
+<a class="c-sidebar-nav-link {{ request()->routeIs('sale.salesDaily') ? 'c-active' : '' }}" href="{{ route('sale.salesDaily') }}">
+                <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i>{{__('public.salesDaily')}}
+            </a>
+        </li>
     </ul>
 </li>
 @endcan

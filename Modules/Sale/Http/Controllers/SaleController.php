@@ -1,17 +1,18 @@
 <?php
 
 namespace Modules\Sale\Http\Controllers;
-
-use Modules\Sale\DataTables\SalesDataTable;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Carbon;
+use Modules\Sale\Entities\Sale;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Cache;
 use Modules\People\Entities\Customer;
 use Modules\Product\Entities\Product;
-use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SaleDetails;
 use Modules\Sale\Entities\SalePayment;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Modules\Sale\DataTables\SalesDataTable;
 use Modules\Sale\Http\Requests\StoreSaleRequest;
 use Modules\Sale\Http\Requests\UpdateSaleRequest;
 
@@ -24,7 +25,16 @@ class SaleController extends Controller
         return $dataTable->render('sale::index');
     }
 
+    public function salesDaily(SalesDataTable $dataTable)
+    {
+        abort_if(Gate::denies('access_sales'), 403);
 
+        // جلب مبيعات اليوم
+        $todaySales = Sale::whereDate('date', Carbon::today())->get();
+
+        // عرض المبيعات في صفحة Blade
+        return view('sale::salesDaily', compact('todaySales'));
+    }
     public function create() {
         abort_if(Gate::denies('create_sales'), 403);
 
@@ -108,12 +118,18 @@ class SaleController extends Controller
 
     public function show(Sale $sale) {
         abort_if(Gate::denies('show_sales'), 403);
-
+        $cacheKey = 'sale.show.' . $sale->id;
+        if (Cache::store('redis')->has($cacheKey)) {
+            return Cache::store('redis')->get($cacheKey);
+        }
         $customer = Customer::findOrFail($sale->customer_id);
 
-        return view('sale::show', compact('sale', 'customer'));
-    }
+        $renderedView = view('sale::sales.show', compact('sale','customer'))->render();
 
+        Cache::store('redis')->put($cacheKey, $renderedView, now()->addMinutes(60));
+
+        return $renderedView;
+    }
 
     public function edit(Sale $sale) {
         abort_if(Gate::denies('edit_sales'), 403);

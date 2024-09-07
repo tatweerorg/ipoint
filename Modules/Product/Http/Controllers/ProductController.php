@@ -2,25 +2,28 @@
 
 namespace Modules\Product\Http\Controllers;
 
-use Modules\Product\DataTables\ProductDataTable;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Upload\Entities\Upload;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 use Modules\Product\Entities\Product;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Support\Renderable;
+use Modules\Product\DataTables\ProductDataTable;
 use Modules\Product\Http\Requests\StoreProductRequest;
 use Modules\Product\Http\Requests\UpdateProductRequest;
-use Modules\Upload\Entities\Upload;
 
 class ProductController extends Controller
 {
 
-    public function index(ProductDataTable $dataTable) {
+    public function index(ProductDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_products'), 403);
-
-        return $dataTable->render('product::products.index');
+        $renderedData = $dataTable->render('product::products.index'); 
+        return $renderedData;
     }
+    
 
 
     public function create() {
@@ -45,11 +48,23 @@ class ProductController extends Controller
     }
 
 
-    public function show(Product $product) {
+    public function show(Product $product)
+    {
         abort_if(Gate::denies('show_products'), 403);
-
-        return view('product::products.show', compact('product'));
+    
+        $cacheKey = 'product.show.' . $product->id;
+    
+        if (Cache::store('redis')->has($cacheKey)) {
+            return Cache::store('redis')->get($cacheKey);
+        }
+    
+        $renderedView = view('product::products.show', compact('product'))->render();
+    
+        Cache::store('redis')->put($cacheKey, $renderedView, now()->addMinutes(60));
+    
+        return $renderedView;
     }
+    
 
 
     public function edit(Product $product) {

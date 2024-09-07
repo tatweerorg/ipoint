@@ -29,6 +29,7 @@ return [
     'Sales' => "Sales ",
     'CreateSale' => "Create Sale ",
     'AllSales' => "All Sales ",
+    'salesDaily'=>'Sales Daily',
     'SaleReturns' => "Sale Returns ",
     'CreateSaleReturn' => "Create Sale Return ",
     'AllSaleReturns' => "All Sale Returns ",
@@ -58,6 +59,8 @@ return [
     'Categories' => "Categories ",
     'Categories' => "Categories ",
     'Categories' => "Categories ",
+    'DueAmount' => "Due Amount",
+    'SalesDetails'=>'Sales Details ',
 
 
 

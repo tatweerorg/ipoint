@@ -21,12 +21,24 @@ class PosController extends Controller
 
     public function index() {
         Cart::instance('sale')->destroy();
+<<<<<<< HEAD
    
+=======
+ if (!Cache::has('products_cache')) {
+        $products = Product::all();
+        Cache::put('products_cache', $products, 30 * 24 * 60 * 60);
+    }
+>>>>>>> 43db5c06cbe69c33aa7c22df362e5c17ea9331d9
 
+    $suspendedSales = Sale::where('suspend', true)->get();
         $customers = Customer::all();
         $product_categories = Category::all();
 
+<<<<<<< HEAD
         return view('sale::pos.index', compact('product_categories', 'customers'));
+=======
+        return view('sale::pos.index', compact('product_categories', 'customers','suspendedSales'));
+>>>>>>> 43db5c06cbe69c33aa7c22df362e5c17ea9331d9
     }
 
 

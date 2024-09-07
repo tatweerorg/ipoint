@@ -11,6 +11,10 @@
 
 @section('content')
 <div class="container-fluid">
+   
     <livewire:reports.profit-loss-report />
+     
+ 
+
 </div>
 @endsection
